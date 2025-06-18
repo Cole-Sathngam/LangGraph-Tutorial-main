@@ -1,15 +1,14 @@
-from dotenv import load_dotenv
+import os
 from typing import Annotated, Literal
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
-from langchain.chat_models import init_chat_model
+from langchain_anthropic import ChatAnthropic
 from pydantic import BaseModel, Field
 from typing_extensions import TypedDict
 
-load_dotenv()
-
-llm = init_chat_model(
-    "anthropic:claude-3-5-sonnet-latest"
+llm = ChatAnthropic(
+    model="claude-3-5-sonnet-latest",
+    api_key=os.getenv("ANTHROPIC_API_KEY")
 )
 
 
