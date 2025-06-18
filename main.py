@@ -25,7 +25,17 @@ class State(TypedDict):
 
 
 def classify_message(state: State):
+    if not state.get("messages"):
+        return {"message_type": "logical"}
+    
     last_message = state["messages"][-1]
+    
+    # Handle different message formats
+    if isinstance(last_message, dict):
+        content = last_message.get("content", "")
+    else:
+        content = getattr(last_message, "content", str(last_message))
+    
     classifier_llm = llm.with_structured_output(MessageClassifier)
 
     result = classifier_llm.invoke([
@@ -36,7 +46,7 @@ def classify_message(state: State):
             - 'logical': if it asks for facts, information, logical analysis, or practical solutions
             """
         },
-        {"role": "user", "content": last_message.content}
+        {"role": "user", "content": content}
     ])
     return {"message_type": result.message_type}
 
@@ -50,7 +60,16 @@ def router(state: State):
 
 
 def therapist_agent(state: State):
+    if not state.get("messages"):
+        return {"messages": [{"role": "assistant", "content": "I'm here to help. How are you feeling?"}]}
+    
     last_message = state["messages"][-1]
+    
+    # Handle different message formats
+    if isinstance(last_message, dict):
+        content = last_message.get("content", "")
+    else:
+        content = getattr(last_message, "content", str(last_message))
 
     messages = [
         {"role": "system",
@@ -61,7 +80,7 @@ def therapist_agent(state: State):
          },
         {
             "role": "user",
-            "content": last_message.content
+            "content": content
         }
     ]
     reply = llm.invoke(messages)
@@ -69,7 +88,16 @@ def therapist_agent(state: State):
 
 
 def logical_agent(state: State):
+    if not state.get("messages"):
+        return {"messages": [{"role": "assistant", "content": "How can I help you with information or analysis?"}]}
+    
     last_message = state["messages"][-1]
+    
+    # Handle different message formats
+    if isinstance(last_message, dict):
+        content = last_message.get("content", "")
+    else:
+        content = getattr(last_message, "content", str(last_message))
 
     messages = [
         {"role": "system",
@@ -80,7 +108,7 @@ def logical_agent(state: State):
          },
         {
             "role": "user",
-            "content": last_message.content
+            "content": content
         }
     ]
     reply = llm.invoke(messages)
