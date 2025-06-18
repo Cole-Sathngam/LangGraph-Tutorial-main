@@ -1,0 +1,10 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "chatbot": {
+      "path": "main:graph",
+      "description": "A chatbot that routes between emotional and logical responses"
+    }
+  },
+  "env": ".env"
+} 

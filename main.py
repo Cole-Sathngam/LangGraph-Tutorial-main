@@ -94,7 +94,6 @@ graph_builder.add_node("classifier", classify_message)
 graph_builder.add_node("router", router)
 graph_builder.add_node("therapist", therapist_agent)
 graph_builder.add_node("logical", logical_agent)
-
 graph_builder.add_edge(START, "classifier")
 graph_builder.add_edge("classifier", "router")
 
