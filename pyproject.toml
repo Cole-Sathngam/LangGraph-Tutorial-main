@@ -1,16 +1,13 @@
 [project]
 name = "langgraph-tutorial"
 version = "0.1.0"
-description = "Add your description here"
+description = "A chatbot that routes between emotional and logical responses"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
-    "ipykernel>=6.29.5",
-    "langchain[anthropic]>=0.3.24",
+    "langchain-anthropic>=0.3.12",
     "langgraph>=0.3.34",
-    "langgraph-cli[inmem]>=0.3.3",
     "python-dotenv>=1.1.0",
-    "uvicorn>=0.24.0",
 ]
 
 [tool.setuptools]

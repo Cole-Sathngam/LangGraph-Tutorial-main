@@ -6,5 +6,7 @@
       "description": "A chatbot that routes between emotional and logical responses"
     }
   },
-  "env": ".env"
+  "env": {
+    "ANTHROPIC_API_KEY": null
+  }
 } 
